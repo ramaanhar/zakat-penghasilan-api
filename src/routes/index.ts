@@ -1,9 +1,11 @@
 import { type Application, type Router } from 'express'
 import ARouter from './a.route'
 import BRouter from './b.route'
+import APIRouter from './api.route'
 
 const _routes: Array<[string, Router]> = [
   ['/a', ARouter],
+  ['/api', APIRouter],
   ['/b', BRouter]
 ]
 
