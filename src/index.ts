@@ -4,6 +4,7 @@ import logger from './utils/logger'
 import cors from 'cors'
 
 import './utils/connectDB'
+import { refreshData } from './middlewares/goldPrice.middleware'
 
 const app: Application = express()
 const port: number = 4000
@@ -16,6 +17,11 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   res.setHeader('Access-Control-Allow-Origin', '*')
   res.setHeader('Access-Control-Allow-Methods', '*')
   res.setHeader('Access-Control-Allow-Headers', '*')
+  next()
+})
+
+app.use(async (req: Request, res: Response, next: NextFunction) => {
+  await refreshData()
   next()
 })
 

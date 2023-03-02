@@ -67,3 +67,8 @@ export const insertGoldPrice = async (date: Date, price: number): Promise<any> =
     })
   return goldPrice
 }
+export const deletePriceAfterAWeek = async (): Promise<any> => {
+  const now = new Date()
+  const aWeekAgo = new Date(new Date(now)).setDate(now.getDate() - 7)
+  await goldPriceModel.deleteMany({ date: { $lte: aWeekAgo } })
+}
