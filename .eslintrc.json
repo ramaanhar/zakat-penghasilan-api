@@ -12,5 +12,7 @@
   },
   "plugins": ["@typescript-eslint"],
   "ignorePatterns": ["**/build/*", "**/node_modules/*", "**/public/*", "**/tsconfig.json"],
-  "rules": {}
+  "rules": {
+    "@typescript-eslint/no-misused-promises": "off"
+  }
 }

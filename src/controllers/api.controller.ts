@@ -1,4 +1,5 @@
 import { type Request, type Response } from 'express'
+import { fetchGoldPriceFromAPI, getAllGoldPrices } from '../services/goldPrice.service'
 
 interface countInput {
   salary: number
@@ -37,13 +38,40 @@ class APIController {
     })
   }
 
-  getGoldPrice = (req: Request, res: Response): Response => {
-    return res.status(200).json({
-      message: 'Success',
-      data: {
-        amount: this.goldPricePerGramInIDR
-      }
-    })
+  getGoldPrice = async (req: Request, res: Response): Promise<Response> => {
+    try {
+      // const price = await getTodayGoldPrice()
+      // if (price.length === 0) {
+      //   return res.status(404).json({
+      //     message: 'Not Found'
+      //   })
+      // }
+      const currentPrice = await fetchGoldPriceFromAPI()
+      return res.status(200).json({
+        message: 'Success',
+        data: currentPrice
+      })
+    } catch (err: any) {
+      return res.status(400).json({
+        message: 'Error',
+        error: err.message
+      })
+    }
+  }
+
+  findAllPrices = async (req: Request, res: Response): Promise<Response> => {
+    try {
+      const prices = await getAllGoldPrices()
+      return res.status(200).json({
+        message: 'Success',
+        data: prices
+      })
+    } catch (err) {
+      return res.status(400).json({
+        message: 'Error',
+        error: err
+      })
+    }
   }
 }
 

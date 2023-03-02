@@ -6,4 +6,5 @@ const APIRouter: Router = Router()
 APIRouter.post('/count', apiController.count)
 APIRouter.get('/nisab', apiController.getNisab)
 APIRouter.get('/gold-price', apiController.getGoldPrice)
+APIRouter.get('/prices', apiController.findAllPrices)
 export default APIRouter

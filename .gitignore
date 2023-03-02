@@ -1,3 +1,6 @@
+#credential
+.env
+
 #dependencies
 /node_modules
 
