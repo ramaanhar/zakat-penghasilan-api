@@ -1,5 +1,6 @@
 import { type Request, type Response } from 'express'
-import { fetchGoldPriceFromAPI, getAllGoldPrices } from '../services/goldPrice.service'
+import { getAllGoldPrices, getTodayGoldPrice } from '../services/goldPrice.service'
+import { failedResponse, notFoundResponse, successResponse } from '../utils/responses'
 
 interface countInput {
   salary: number
@@ -7,70 +8,53 @@ interface countInput {
 }
 
 class APIController {
-  private readonly goldPricePerGramInIDR = 1000000
+  // private readonly goldPricePerGramInIDR = 1000000
 
-  count = (req: Request, res: Response): Response => {
-    const { salary, anotherIncome }: countInput = req.body
-    const totalIncome = salary * 12 + anotherIncome
-    let perYear = 0
-    let wajibZakat = false
-    if (totalIncome >= this.goldPricePerGramInIDR * 85) {
-      perYear = totalIncome * 0.025
-      wajibZakat = true
-    }
-    const perMonth = perYear / 12
-    return res.status(200).json({
-      message: 'Success',
-      data: {
-        wajibZakat,
-        perYear,
-        perMonth
+  count = async (req: Request, res: Response): Promise<Response> => {
+    try {
+      const goldPrice = await getTodayGoldPrice()
+      if (goldPrice.length === 0) return notFoundResponse(res, 'Gold price')
+      const { salary, anotherIncome }: countInput = req.body
+      const totalIncome = salary * 12 + anotherIncome
+      let perYear = 0
+      let wajibZakat = false
+      if (totalIncome >= goldPrice.price * 85) {
+        perYear = totalIncome * 0.025
+        wajibZakat = true
       }
-    })
+      const perMonth = perYear / 12
+      return successResponse(res, { wajibZakat, perYear, perMonth })
+    } catch (err: any) {
+      return failedResponse(res, err.message)
+    }
   }
 
-  getNisab = (req: Request, res: Response): Response => {
-    return res.status(200).json({
-      message: 'Success',
-      data: {
-        amount: this.goldPricePerGramInIDR * 85
-      }
-    })
+  getNisab = async (req: Request, res: Response): Promise<Response> => {
+    try {
+      const price = await getTodayGoldPrice()
+      if (price.length === 0) return notFoundResponse(res, 'Gold price')
+      return successResponse(res, price.price * 85)
+    } catch (err: any) {
+      return failedResponse(res, err.message)
+    }
   }
 
   getGoldPrice = async (req: Request, res: Response): Promise<Response> => {
     try {
-      // const price = await getTodayGoldPrice()
-      // if (price.length === 0) {
-      //   return res.status(404).json({
-      //     message: 'Not Found'
-      //   })
-      // }
-      const currentPrice = await fetchGoldPriceFromAPI()
-      return res.status(200).json({
-        message: 'Success',
-        data: currentPrice
-      })
+      const price = await getTodayGoldPrice()
+      if (price.length === 0) return notFoundResponse(res, 'Gold price')
+      return successResponse(res, price)
     } catch (err: any) {
-      return res.status(400).json({
-        message: 'Error',
-        error: err.message
-      })
+      return failedResponse(res, err.message)
     }
   }
 
   findAllPrices = async (req: Request, res: Response): Promise<Response> => {
     try {
       const prices = await getAllGoldPrices()
-      return res.status(200).json({
-        message: 'Success',
-        data: prices
-      })
-    } catch (err) {
-      return res.status(400).json({
-        message: 'Error',
-        error: err
-      })
+      return successResponse(res, prices)
+    } catch (err: any) {
+      return failedResponse(res, err.message)
     }
   }
 }
