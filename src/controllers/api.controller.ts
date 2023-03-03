@@ -1,11 +1,7 @@
 import { type Request, type Response } from 'express'
 import { getAllGoldPrices, getTodayGoldPrice } from '../services/goldPrice.service'
 import { failedResponse, notFoundResponse, successResponse } from '../utils/responses'
-
-interface countInput {
-  salary: number
-  anotherIncome: number
-}
+import type countInput from '../interfaces/countInput.interface'
 
 class APIController {
   // private readonly goldPricePerGramInIDR = 1000000
