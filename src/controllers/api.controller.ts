@@ -9,7 +9,7 @@ class APIController {
   count = async (req: Request, res: Response): Promise<Response> => {
     try {
       const goldPrice = await getTodayGoldPrice()
-      if (goldPrice.length === 0) return notFoundResponse(res, 'Gold price')
+      if (!goldPrice) return notFoundResponse(res, 'Gold price')
       const { salary, anotherIncome }: countInput = req.body
       const totalIncome = salary * 12 + anotherIncome
       let perYear = 0
@@ -28,7 +28,7 @@ class APIController {
   getNisab = async (req: Request, res: Response): Promise<Response> => {
     try {
       const price = await getTodayGoldPrice()
-      if (price.length === 0) return notFoundResponse(res, 'Gold price')
+      if (!price) return notFoundResponse(res, 'Gold price')
       return successResponse(res, price.price * 85)
     } catch (err: any) {
       return failedResponse(res, err.message)
@@ -38,7 +38,7 @@ class APIController {
   getGoldPrice = async (req: Request, res: Response): Promise<Response> => {
     try {
       const price = await getTodayGoldPrice()
-      if (price.length === 0) return notFoundResponse(res, 'Gold price')
+      if (!price) return notFoundResponse(res, 'Gold price')
       return successResponse(res, price)
     } catch (err: any) {
       return failedResponse(res, err.message)

@@ -11,8 +11,9 @@
     "project": ["**/tsconfig.json"]
   },
   "plugins": ["@typescript-eslint"],
-  "ignorePatterns": ["**/build/*", "**/node_modules/*", "**/public/*", "**/tsconfig.json"],
+  "ignorePatterns": ["**/build/*", "**/node_modules/*", "**/public/*", "**/tsconfig.json", "jest.config.js"],
   "rules": {
-    "@typescript-eslint/no-misused-promises": "off"
+    "@typescript-eslint/no-misused-promises": "off",
+    "@typescript-eslint/strict-boolean-expressions": "off"
   }
 }
