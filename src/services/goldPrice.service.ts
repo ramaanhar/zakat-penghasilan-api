@@ -7,6 +7,7 @@ export const getAllGoldPrices = async (): Promise<any> => {
   const goldPrices = await goldPriceModel
     .find()
     .then((data) => {
+      logger.info('getAllGoldPrices success!')
       return data
     })
     .catch((err) => {
@@ -23,6 +24,7 @@ export const getTodayGoldPrice = async (): Promise<any> => {
     .findOne({ date: { $gte: startDate, $lte: endDate } })
     .sort({ date: -1 })
     .then((data) => {
+      logger.info('getTodayGoldPrices success!')
       return data
     })
     .catch((err) => {
@@ -43,6 +45,7 @@ export const fetchGoldPriceFromAPI = async (): Promise<any> => {
     const pricePerTroyOunce = await axios
       .get(url)
       .then((data) => {
+        logger.info('fetchGoldPriceFromAPI success!')
         return data.data.result
       })
       .catch((err) => {
@@ -60,6 +63,7 @@ export const insertGoldPrice = async (date: Date, price: number): Promise<any> =
   const goldPrice = await goldPriceModel
     .create({ date, price })
     .then((data) => {
+      logger.info('insertGoldPrice success!')
       return data
     })
     .catch((err) => {

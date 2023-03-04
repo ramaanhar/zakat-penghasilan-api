@@ -1,6 +1,8 @@
-// import { scheduleJob, scheduledJobs } from 'node-schedule'
-import { scheduleJob } from 'node-schedule'
+/* eslint-disable @typescript-eslint/dot-notation */
+import { scheduleJob, scheduledJobs } from 'node-schedule'
+// import { scheduleJob } from 'node-schedule'
 import { deletePriceAfterAWeek, fetchGoldPriceFromAPI, insertGoldPrice } from '../services/goldPrice.service'
+import logger from '../utils/logger'
 
 export const refreshData = async (): Promise<void> => {
   try {
@@ -11,8 +13,7 @@ export const refreshData = async (): Promise<void> => {
       const price = await fetchGoldPriceFromAPI()
       await insertGoldPrice(date, price)
     })
-    // eslint-disable-next-line @typescript-eslint/dot-notation
-    // console.log('refreshData will be running at', scheduledJobs['refreshData'].nextInvocation())
+    logger.info(`refreshData will be running at ${scheduledJobs['refreshData'].nextInvocation().toString()}`)
   } catch (err: any) {
     console.log('Error at:', err.message)
   }
