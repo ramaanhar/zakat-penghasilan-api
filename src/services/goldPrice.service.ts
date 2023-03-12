@@ -18,8 +18,17 @@ export const getAllGoldPrices = async (): Promise<any> => {
 }
 export const getTodayGoldPrice = async (): Promise<any> => {
   const now: Date = new Date()
-  const startDate = new Date(now).setHours(0, 0, 0, 0)
-  const endDate = new Date(now).setHours(23, 59, 59, 999)
+  let startDate: Date = new Date()
+  let endDate: Date = new Date()
+  if (now.getHours() >= 17) {
+    startDate = new Date(new Date(now).setHours(17, 0, 0, 0))
+    endDate = new Date(new Date(now).setDate(now.getDate() + 1))
+    endDate.setHours(16, 59, 59, 999)
+  } else {
+    startDate = new Date(new Date(now).setDate(now.getDate() - 1))
+    startDate.setHours(17, 0, 0, 0)
+    endDate = new Date(new Date(now).setHours(16, 59, 59, 999))
+  }
   logger.info(`now: ${now.toString()}`)
   logger.info(`startDate: ${startDate.toString()}`)
   logger.info(`endDate: ${endDate.toString()}`)
