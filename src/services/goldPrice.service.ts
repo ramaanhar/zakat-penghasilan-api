@@ -20,6 +20,9 @@ export const getTodayGoldPrice = async (): Promise<any> => {
   const now: Date = new Date()
   const startDate = new Date(now).setHours(0, 0, 0, 0)
   const endDate = new Date(now).setHours(23, 59, 59, 999)
+  logger.info(`now: ${now.toString()}`)
+  logger.info(`startDate: ${startDate.toString()}`)
+  logger.info(`endDate: ${endDate.toString()}`)
   const goldPrice = await goldPriceModel
     .findOne({ date: { $gte: startDate, $lte: endDate } })
     .sort({ date: -1 })
