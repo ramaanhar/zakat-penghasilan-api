@@ -14,10 +14,13 @@ Saat ini baru disediakan versi API saja.
 
 ## Menu yang disediakan
 
-Berikut ini adalah beberapa menu yang bisa diakses (tambahkan setelah link projek di atas): (disarankan akses menggunakan [Postman](https://www.postman.com/))
+Berikut ini adalah beberapa menu yang bisa diakses:
+
 - `/api/count` (method POST), menghitung zakat penghasilan
 - `/api/nisab` (method GET), mengetahui nishab zakat penghasilan hari ini dalam rupiah
 - `/api/gold-price` (method GET), mengetahui harga 1 gram emas hari ini
+
+Cara pakainya, tambahkan tulisan di atas setelah link projek. Disarankan akses menggunakan [Postman](https://www.postman.com/)
 
 ## Cara Menghitung Zakat
 
