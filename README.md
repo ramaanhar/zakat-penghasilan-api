@@ -2,7 +2,7 @@
 
 Projek ini dapat menghitung zakat penghasilan yang harus dibayarkan oleh seseorang dengan hanya mengetahui gaji bulanannya dan besarnya penghasilan tambahan yang diperolehnya selama setahun jika ada.
 
-Zakat adalah salah satu syari'at / aturan dalam agama Islam yang mewajibkan seseorang mengeluarkan sebagian hartanya jika telah memenuhi syarat tertentu dan disalurkan kepada penerima tertentu. Zakat terdiri dari beberapa jenis, seperti zakat fitrah, zakat profesi, zakat logam mulia, dan lain-lain. Tetapi, untuk saat ini di projek ini hanya tersedia perhitungan zakat penghasilan.
+Zakat adalah salah satu syari'at / aturan dalam agama Islam yang mewajibkan seseorang mengeluarkan sebagian hartanya jika telah memenuhi syarat tertentu dan disalurkan kepada penerima tertentu. Zakat terdiri dari beberapa jenis, seperti zakat fitrah, zakat profesi, zakat logam mulia, dan lain-lain. Tetapi, untuk saat ini hanya tersedia perhitungan zakat penghasilan.
 
 Zakat penghasilan adalah zakat yang dikeluarkan dari penghasilan seseorang selama setahun penuh, baik itu dari gaji maupun dari sumber penghasilan lainnya. Seorang Muslim diwajibkan membayar zakat penghasilan jika jumlah penghasilannya selama setahun penuh telah memenuhi nisab atau minimal jumlah penghasilan selama setahun, yakni 85 gram emas.
 
@@ -25,8 +25,12 @@ Cara pakainya, tambahkan tulisan di atas setelah link projek. Disarankan akses m
 ## Cara Menghitung Zakat
 
 Masuk ke menu `/api/count` (method POST), lalu isikan dengan variabel berikut:
-- `"salary"`, diisi dengan gaji per bulan (wajib diisi, jika tidak bekerja isikan dengan 0)
+- `"salary"`, diisi dengan gaji per bulan (wajib diisi, jika tidak sedang bekerja isikan dengan 0)
 - `"anotherIncome"`, diisi dengan penghasilan tambahan selain gaji dalam satu tahun (opsional)
+Jalankan menu `/api/count`, dan akan muncul hasil berupa object `"data"` dengan isi sebagai berikut:
+- `"wajibZakat"`, jika berisi `false` maka belum wajib membayar zakat penghasilan berdasarkan data yang dimasukkan. Sedangkan jika `true`, maka sudah wajib membayar zakat penghasilan.
+- `"perYear"`, berisi nominal zakat (dalam rupiah) yang wajib dibayarkan setiap tahun, jika memilih membayar per tahun.
+- `"perMonth"`, berisi nominal zakat (dalam rupiah) yang wajib dibayarkan setiap bulan, jika memilih membayar per bulan.
 
 ## Disclaimer
 

@@ -39,7 +39,8 @@ class APIController {
     try {
       const price = await getTodayGoldPrice()
       if (!price) return notFoundResponse(res, 'Gold price')
-      return successResponse(res, price)
+      const priceValue = price.price
+      return successResponse(res, { price: priceValue })
     } catch (err: any) {
       return failedResponse(res, err.message)
     }
