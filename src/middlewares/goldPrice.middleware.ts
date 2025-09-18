@@ -13,7 +13,10 @@ export const refreshData = async (): Promise<void> => {
       const price = await fetchGoldPriceFromAPI()
       await insertGoldPrice(date, price)
     })
-    logger.info(`refreshData will be running at ${scheduledJobs['refreshData'].nextInvocation().toString()}`)
+    const nextInvocation = scheduledJobs['refreshData']?.nextInvocation()
+    if (nextInvocation) {
+      logger.info(`refreshData will be running at ${nextInvocation.toString()}`)
+    }
   } catch (err: any) {
     console.log('Error at:', err.message)
   }
