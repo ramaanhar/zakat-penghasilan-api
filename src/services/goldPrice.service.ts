@@ -42,7 +42,7 @@ export const getTodayGoldPrice = async (): Promise<any> => {
     })
   return goldPrice
 }
-export const fetchGoldPriceFromAPI = async (): Promise<any> => {
+export const fetchGoldPriceFromAPI = async (): Promise<number> => {
   try {
     const date = new Date()
     date.setDate(date.getDate() - 1)
@@ -55,17 +55,19 @@ export const fetchGoldPriceFromAPI = async (): Promise<any> => {
       .get(url)
       .then((data) => {
         logger.info('fetchGoldPriceFromAPI success!')
-        return data.data.result
+        return Number(data.data.result)
       })
       .catch((err) => {
         logger.info('Error while run axios')
         logger.error(err)
+        return 0
       })
     // 1 troy ounce = 31,1 gram
     return pricePerTroyOunce / 31.1
   } catch (err) {
     logger.info('Error while run fetchGoldPriceFromAPI')
     logger.error(err)
+    throw err
   }
 }
 export const insertGoldPrice = async (date: Date, price: number): Promise<any> => {
